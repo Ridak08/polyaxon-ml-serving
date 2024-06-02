@@ -1,0 +1,116 @@
+#Importacion de librerias
+import pandas as pd
+import numpy as np
+from sklearn.utils import resample
+from sklearn import preprocessing
+import matplotlib.pyplot as plt
+import sklearn
+from sklearn import metrics
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
+from sklearn.preprocessing import QuantileTransformer
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn import metrics
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+from tensorflow.keras.utils import to_categorical, plot_model
+import tensorflow as tf
+from tensorflow import keras
+from keras.models import Sequential
+from keras.layers import Dense,GRU,Embedding,Dropout,Flatten,Conv1D,MaxPooling1D,LSTM
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression, SGDClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+import joblib
+import seaborn as sns
+
+def train_and_eval(
+    metric='accuracy',
+    test_size=0.2,
+    random_state=1012,
+    num_epochs = 50,
+    model_path=None,
+):
+    #Cargando y datos
+    dns = pd.read_csv("./1000/dns.csv")
+    udp = pd.read_csv("./1000/udp.csv")
+    syn = pd.read_csv("./1000/syn.csv")
+    snmp = pd.read_csv("./1000/snmp.csv")
+    ntp = pd.read_csv("./1000/ntp.csv")
+    netbios = pd.read_csv("./1000/netBIOS.csv")
+    ssdp = pd.read_csv("./1000/ssdp.csv")
+    benign = pd.read_csv("./1000/benigno1000.csv")
+    
+    #Concatenando datos
+    #df = pd.concat([dns, ldap, mssql, netbios, ntp, snmp, ssdp, syn, tftp, udp, udplag])
+    df = pd.concat([dns, netbios, ssdp, ntp, snmp, syn, udp, benign])
+    
+    # Eliminacion de columnas innecesarias
+    unwanted = ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.2', 'Unnamed: 0.3',
+                'Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Destination Port', ' Timestamp',
+                ' Bwd PSH Flags',' Fwd URG Flags', ' Bwd URG Flags', 'FIN Flag Count', ' PSH Flag Count', 
+                ' ECE Flag Count', 'Fwd Avg Bytes/Bulk', ' Fwd Avg Packets/Bulk', ' Fwd Avg Bulk Rate', 
+                ' Bwd Avg Bytes/Bulk', ' Bwd Avg Packets/Bulk', 'Bwd Avg Bulk Rate',  
+                'SimillarHTTP', ' RST Flag Count', ' Fwd Header Length.1', 
+    			'Subflow Fwd Packets', ' Subflow Fwd Bytes', ' Subflow Bwd Packets', ' Subflow Bwd Bytes']
+    #'Unnamed: 0.4', 
+    df.drop(unwanted, axis = 1, inplace= True)
+    
+    # Eliminacion de filas con valores infinitos y nulos
+    df.replace([np.inf, -np.inf], np.nan, inplace= True)
+    df.dropna(inplace = True) 
+    
+    # Cambiando las etiquetas valores numericos
+    df[' Label'] = df[' Label'].replace('BENIGN', '0')
+    df[' Label'] = df[' Label'].replace('DrDoS_DNS', '1')
+    df[' Label'] = df[' Label'].replace('DrDoS_NetBIOS', '4')
+    df[' Label'] = df[' Label'].replace('DrDoS_NTP', '5')
+    df[' Label'] = df[' Label'].replace('DrDoS_SNMP', '6')
+    df[' Label'] = df[' Label'].replace('DrDoS_SSDP', '7')
+    df[' Label'] = df[' Label'].replace('Syn', '2')
+    df[' Label'] = df[' Label'].replace('DrDoS_UDP', '3')
+    
+    df[' Label'] = df[' Label'].astype('int')
+    df[' Label'].unique()
+    
+    # Revolviendo el dataset
+    df_shuffle = df.sample(frac = 1)
+    #_______________________________________________________
+    X = df_shuffle.data
+    y = df_shuffle.target
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+    
+    features = X_train.shape[1]
+    nClasses = len(df[' Label'].unique())
+
+    model_dnn_1 = Sequential()
+    model_dnn_1.add(Dense(64, input_dim=features, activation='relu')) #Capa de entrada
+    model_dnn_1.add(Dense(128, activation='relu'))                    #Capa densa 1
+    model_dnn_1.add(Dropout(0.2))                                     #Capa Dropout 1
+    model_dnn_1.add(Dense(256, activation='relu'))                    #Capa densa 2
+    model_dnn_1.add(Dense(256, activation='relu'))                    #Capa densa 3
+    model_dnn_1.add(Dense(256, activation='relu'))                    #Capa densa 4
+    model_dnn_1.add(Dropout(0.2))                                     #Capa Dropout 2
+    model_dnn_1.add(Dense(128, activation='relu'))                    #Capa densa 5
+    model_dnn_1.add(Dense(128, activation='relu'))                    #Capa densa 6
+    model_dnn_1.add(Dense(64, activation='relu'))                     #Capa densa 7
+    model_dnn_1.add(Dense(nClasses, activation='softmax'))                  #Capa de salida
+
+    model_dnn_1.compile(optimizer='adam', loss= 'sparse_categorical_crossentropy', metrics= ['accuracy'])
+    model_dnn_1.fit(X_train, y_train, epochs = num_epochs)
+    
+    y_pred = model_dnn_1.predict(X_test)
+    accuracy = metrics.accuracy_score(y_test, y_pred)
+    recall = metrics.recall_score(y_test, y_pred, average='weighted')
+    f1 = metrics.f1_score(y_pred, y_pred, average='weighted')
+    results = {
+        'accuracy': accuracy,
+        'recall': recall,
+        'f1': f1,
+    }
+    if model_path:
+        joblib.dump(model_dnn_1, model_path)
+    return results
