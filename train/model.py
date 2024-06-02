@@ -33,49 +33,7 @@ def train_and_eval(
     random_state=33,
     model_path=None,
 ):
-    #Cargando y datos
-    dns = pd.read_csv("./1000/dns.csv")
-    udp = pd.read_csv("./1000/udp.csv")
-    syn = pd.read_csv("./1000/syn.csv")
-    snmp = pd.read_csv("./1000/snmp.csv")
-    ntp = pd.read_csv("./1000/ntp.csv")
-    netbios = pd.read_csv("./1000/netBIOS.csv")
-    ssdp = pd.read_csv("./1000/ssdp.csv")
-    benign = pd.read_csv("./1000/benigno1000.csv")
-    
-    #Concatenando datos
-    #df = pd.concat([dns, ldap, mssql, netbios, ntp, snmp, ssdp, syn, tftp, udp, udplag])
-    df = pd.concat([dns, netbios, ssdp, ntp, snmp, syn, udp, benign])
-    
-    # Eliminacion de columnas innecesarias
-    unwanted = ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.2', 'Unnamed: 0.3',
-                'Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Destination Port', ' Timestamp',
-                ' Bwd PSH Flags',' Fwd URG Flags', ' Bwd URG Flags', 'FIN Flag Count', ' PSH Flag Count', 
-                ' ECE Flag Count', 'Fwd Avg Bytes/Bulk', ' Fwd Avg Packets/Bulk', ' Fwd Avg Bulk Rate', 
-                ' Bwd Avg Bytes/Bulk', ' Bwd Avg Packets/Bulk', 'Bwd Avg Bulk Rate',  
-                'SimillarHTTP', ' RST Flag Count', ' Fwd Header Length.1', 
-    			'Subflow Fwd Packets', ' Subflow Fwd Bytes', ' Subflow Bwd Packets', ' Subflow Bwd Bytes']
-    #'Unnamed: 0.4', 
-    df.drop(unwanted, axis = 1, inplace= True)
-    
-    # Eliminacion de filas con valores infinitos y nulos
-    df.replace([np.inf, -np.inf], np.nan, inplace= True)
-    df.dropna(inplace = True) 
-    
-    # Cambiando las etiquetas valores numericos
-    df[' Label'] = df[' Label'].replace('BENIGN', '0')
-    df[' Label'] = df[' Label'].replace('DrDoS_DNS', '1')
-    df[' Label'] = df[' Label'].replace('DrDoS_NetBIOS', '4')
-    df[' Label'] = df[' Label'].replace('DrDoS_NTP', '5')
-    df[' Label'] = df[' Label'].replace('DrDoS_SNMP', '6')
-    df[' Label'] = df[' Label'].replace('DrDoS_SSDP', '7')
-    df[' Label'] = df[' Label'].replace('Syn', '2')
-    df[' Label'] = df[' Label'].replace('DrDoS_UDP', '3')
-    df[' Label'] = df[' Label'].astype('int')
-    
-    # Revolviendo el dataset
-    df_shuffle = df.sample(frac = 1)
-    #_______________________________________________________
+    df_shuffle = pd.read_csv("./df_shuffle_1000.csv")
     X = df_shuffle.data
     y = df_shuffle.target
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
