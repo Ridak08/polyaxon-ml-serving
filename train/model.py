@@ -34,9 +34,12 @@ def train_and_eval(
     model_path=None,
 ):
     df_shuffle = pd.read_csv("./df_shuffle_1000.csv")
+    features = df_shuffle.drop(" Label", axis=1).values
+    labels = df_shuffle[" Label"].values
+    
     X = df_shuffle.data
     y = df_shuffle.target
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=test_size, random_state=random_state)
     
     features = X_train.shape[1]
     nClasses = len(df[' Label'].unique())
