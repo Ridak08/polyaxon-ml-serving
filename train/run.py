@@ -13,11 +13,6 @@ if __name__ == "__main__":
         default=50,
     )
     parser.add_argument(
-        "--metric",
-        type=str,
-        default="accuracy",
-    )
-    parser.add_argument(
         "--test_size",
         type=float,
         default=0.2,
@@ -38,7 +33,6 @@ if __name__ == "__main__":
     metrics = train_and_eval(
         model_path=model_path,
         num_epochs=args.num_epochs,
-        metric=args.metric,
         test_size=args.test_size,
         random_state=args.random_state,
     )
