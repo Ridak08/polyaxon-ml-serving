@@ -1,10 +1,10 @@
 version: 1.1
 kind: component
 name: train
-tags: [examples, scikit-learn]
+tags: [examples, tensorflow]
 
 inputs:
-- {name: num_epochs, type: int, isOptional: true, value: 50}
+#- {name: num_epochs, type: int, isOptional: true, value: 50}
 #- {name: metric, type: str, isOptional: true, value: accuracy}
 - {name: test_size, type: float, isOptional: true, value: 0.2}
 - {name: random_state, type: int, isOptional: true, value: 33}
@@ -20,7 +20,7 @@ run:
     workingDir: "{{ globals.artifacts_path }}/polyaxon-ml-serving/train"
     command: ["python", "-u", "run.py"]
     args: [
-      "--num_epochs={{ num_epochs }}",
+      #"--num_epochs={{ num_epochs }}",
       #"--metric={{ metric }}",
       "--test_size={{ test_size }}",
       "--random_state={{ random_state }}"
