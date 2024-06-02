@@ -28,10 +28,9 @@ import joblib
 import seaborn as sns
 
 def train_and_eval(
-    metric='accuracy',
+    num_epochs = 50,
     test_size=0.2,
     random_state=1012,
-    num_epochs = 50,
     model_path=None,
 ):
     #Cargando y datos
