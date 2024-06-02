@@ -28,9 +28,9 @@ import joblib
 import seaborn as sns
 
 def train_and_eval(
-    num_epochs = 50,
+    #num_epochs = 50,
     test_size=0.2,
-    random_state=1012,
+    random_state=33,
     model_path=None,
 ):
     #Cargando y datos
@@ -71,9 +71,7 @@ def train_and_eval(
     df[' Label'] = df[' Label'].replace('DrDoS_SSDP', '7')
     df[' Label'] = df[' Label'].replace('Syn', '2')
     df[' Label'] = df[' Label'].replace('DrDoS_UDP', '3')
-    
     df[' Label'] = df[' Label'].astype('int')
-    df[' Label'].unique()
     
     # Revolviendo el dataset
     df_shuffle = df.sample(frac = 1)
