@@ -7,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 
 #import pandas as pd
-#import numpy as np
+import numpy as np
 #from sklearn.utils import resample
 #from sklearn import preprocessing
 #import matplotlib.pyplot as plt
