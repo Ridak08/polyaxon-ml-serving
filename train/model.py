@@ -35,31 +35,23 @@ def train_and_eval(
     random_state=33,
     model_path=None,
 ):
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state
-    )
+    df_shuffle = pd.read_csv("./df_shuffle_1000.csv")
+    features = df_shuffle.drop(" Label", axis=1).values
+    labels = df_shuffle[" Label"].values
+    
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=test_size, random_state=random_state)
     
     features = X_train.shape[1]
     nClasses = len(df[' Label'].unique())
 
-    model_dnn_1 = Sequential()
-    model_dnn_1.add(Dense(64, input_dim=features, activation='relu')) #Capa de entrada
-    model_dnn_1.add(Dense(128, activation='relu'))                    #Capa densa 1
-    model_dnn_1.add(Dropout(0.2))                                     #Capa Dropout 1
-    model_dnn_1.add(Dense(256, activation='relu'))                    #Capa densa 2
-    model_dnn_1.add(Dense(256, activation='relu'))                    #Capa densa 3
-    model_dnn_1.add(Dense(256, activation='relu'))                    #Capa densa 4
-    model_dnn_1.add(Dropout(0.2))                                     #Capa Dropout 2
-    model_dnn_1.add(Dense(128, activation='relu'))                    #Capa densa 5
-    model_dnn_1.add(Dense(128, activation='relu'))                    #Capa densa 6
-    model_dnn_1.add(Dense(64, activation='relu'))                     #Capa densa 7
-    model_dnn_1.add(Dense(nClasses, activation='softmax'))                  #Capa de salida
-
-    model_dnn_1.compile(optimizer='adam', loss= 'sparse_categorical_crossentropy', metrics= ['accuracy'])
-    model_dnn_1.fit(X_train, y_train, validation_data=(X_test, y_test))
+    classifier = KNeighborsClassifier(
+        n_neighbors=n_neighbors,
+        leaf_size=leaf_size,
+        metric=metric,
+        p=p,
+        weights=weights,
+    )
+    classifier.fit(X_train, y_train)
     
     y_pred = model_dnn_1.predict(X_test)
     accuracy = metrics.accuracy_score(y_test, y_pred)
