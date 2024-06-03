@@ -35,7 +35,7 @@ def train_and_eval(
     y_pred = model_dnn_1.predict(X_test)
     accuracy = metrics.accuracy_score(y_test, y_pred)
     recall = metrics.recall_score(y_test, y_pred, average='weighted')
-    f1 = metrics.f1_score(y_pred, y_pred, average='weighted')
+    f1 = metrics.f1_score(y_test, y_pred, average='weighted')
     precision = sklearn.metrics.precision_score(y_test, y_pred, labels=None, pos_label=1, average='macro', sample_weight=None, zero_division='warn')
     results = {
         'accuracy': accuracy,
