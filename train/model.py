@@ -1,61 +1,48 @@
-#Importacion de librerias
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
-
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.datasets import load_iris
-
 import pandas as pd
 import numpy as np
 import sklearn
 import matplotlib.pyplot as plt
-
-import tensorflow as tf
-
-#from sklearn.svm import SVC
-
-#from tensorflow.keras.utils import to_categorical, plot_model
-
-#from tensorflow import keras
-#from keras.models import Sequential
-#from keras.layers import Dense,GRU,Embedding,Dropout,Flatten,Conv1D,MaxPooling1D,LSTM
-
-
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import StandardScaler
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 def train_and_eval(
-    n_neighbors=3,
-    leaf_size=30,
-    metric="minkowski",
-    p=2,
-    weights="uniform",
-    test_size=0.3,
-    random_state=1012,
+    #num_epochs = 50,
+    test_size=0.2,
+    random_state=33,
     model_path=None,
 ):
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state
-    )
-    classifier = KNeighborsClassifier(
-        n_neighbors=n_neighbors,
-        leaf_size=leaf_size,
-        metric=metric,
-        p=p,
-        weights=weights,
-    )
-    classifier.fit(X_train, y_train)
-    y_pred = classifier.predict(X_test)
+    df_shuffle = pd.read_csv("./df_shuffle_1000.csv")
+    features = df_shuffle.drop(" Label", axis=1).values
+    labels = df_shuffle[" Label"].values
+    
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=test_size, random_state=random_state)
+    
+    features = X_train.shape[1]
+    nClasses = len(df_shuffle[' Label'].unique())
+
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+
+    model_dnn_1 = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(64, 128, 256, 256, 256, 128, 128, 64), random_state=1, activation='relu')
+    model_dnn_1.fit(X_train, y_train)
+
+    y_pred = model_dnn_1.predict(X_test)
     accuracy = metrics.accuracy_score(y_test, y_pred)
-    recall = metrics.recall_score(y_test, y_pred, average="weighted")
-    f1 = metrics.f1_score(y_pred, y_pred, average="weighted")
+    recall = metrics.recall_score(y_test, y_pred, average='weighted')
+    f1 = metrics.f1_score(y_pred, y_pred, average='weighted')
+    precision = sklearn.metrics.precision_score(y_test, y_pred, labels=None, pos_label=1, average='macro', sample_weight=None, zero_division='warn')
     results = {
-        "accuracy": accuracy,
-        "recall": recall,
-        "f1": f1,
+        'accuracy': accuracy,
+        'recall': recall,
+        'f1': f1,
+        'precision' : precision
     }
     if model_path:
-        joblib.dump(classifier, model_path)
+        joblib.dump(model_dnn_1, model_path)
     return results
