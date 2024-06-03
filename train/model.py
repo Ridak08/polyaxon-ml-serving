@@ -10,6 +10,8 @@ import pandas as pd
 import numpy as np
 import sklearn
 import matplotlib.pyplot as plt
+
+pip install tensorflow
 import tensorflow as tf
 
 #from sklearn.svm import SVC
