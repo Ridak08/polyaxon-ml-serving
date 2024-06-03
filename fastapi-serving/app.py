@@ -19,74 +19,68 @@ classifier = load_model("./model.joblib")
 
 
 class DataFeatures(BaseModel):
-    Protocol
-    Flow Duration
-    Total Fwd Packets
-    Total Backward Packets
-    Total Length of Fwd Packets
-    Total Length of Bwd Packets
-    Fwd Packet Length Max
-    Fwd Packet Length Min
-    Fwd Packet Length Mean
-    Fwd Packet Length Std
-    Bwd Packet Length Max
-    Bwd Packet Length Min
-    Bwd Packet Length Mean
-    Bwd Packet Length Std
-    Flow Bytes/s
-    Flow Packets/s
-    Flow IAT Mean
-    Flow IAT Std
-    Flow IAT Max
-    Flow IAT Min
-    Fwd IAT Total
-    Fwd IAT Mean
-    Fwd IAT Std
-    Fwd IAT Max
-    Fwd IAT Min
-    Bwd IAT Total
-    Bwd IAT Mean
-    Bwd IAT Std
-    Bwd IAT Max
-    Bwd IAT Min
-    Fwd PSH Flags
-    Fwd Header Length
-    Bwd Header Length
-    Fwd Packets/s
-    Bwd Packets/s
-    Min Packet Length
-    Max Packet Length
-    Packet Length Mean
-    Packet Length Std
-    Packet Length Variance
-    SYN Flag Count
-    ACK Flag Count
-    URG Flag Count
-    CWE Flag Count
-    Down/Up Ratio
-    Average Packet Size
-    Avg Fwd Segment Size
-    Avg Bwd Segment Size
-    Init_Win_bytes_forward
-    Init_Win_bytes_backward
-    act_data_pkt_fwd
-    min_seg_size_forward
-    Active Mean
-    Active Std
-    Active Max
-    Active Min
-    Idle Mean
-    Idle Std
-    Idle Max
-    Idle Min
-    Inbound
+    Protocol: int
+    Flow Duration: int
+    Total Fwd Packets: int
+    Total Backward Packets: int
+    Total Length of Fwd Packets: float
+    Total Length of Bwd Packets: float
+    Fwd Packet Length Max: float
+    Fwd Packet Length Min: float
+    Fwd Packet Length Mean: float
+    Fwd Packet Length Std: float
+    Bwd Packet Length Max: float
+    Bwd Packet Length Min: float
+    Bwd Packet Length Mean: float
+    Bwd Packet Length Std: float
+    Flow Bytes/s: float
+    Flow Packets/s: float
+    Flow IAT Mean: float
+    Flow IAT Std: float
+    Flow IAT Max: float
+    Flow IAT Min: float
+    Fwd IAT Total: float
+    Fwd IAT Mean: float
+    Fwd IAT Std: float
+    Fwd IAT Max: float
+    Fwd IAT Min: float
+    Bwd IAT Total: float
+    Bwd IAT Mean: float
+    Bwd IAT Std: float
+    Bwd IAT Max: float
+    Bwd IAT Min: float
+    Fwd PSH Flags: float
+    Fwd Header Length: float
+    Bwd Header Length: float
+    Fwd Packets/s: float
+    Bwd Packets/s: float
+    Min Packet Length: float
+    Max Packet Length: float
+    Packet Length Mean: float
+    Packet Length Std: float
+    Packet Length Variance: float
+    SYN Flag Count: float
+    ACK Flag Count: float
+    URG Flag Count: float
+    CWE Flag Count: float
+    Down/Up Ratio: float
+    Average Packet Size: float
+    Avg Fwd Segment Size: float
+    Avg Bwd Segment Size: float
+    Init_Win_bytes_forward: float
+    Init_Win_bytes_backward: float
+    act_data_pkt_fwd: float
+    min_seg_size_forward: float
+    Active Mean: float
+    Active Std: float
+    Active Max: float
+    Active Min: float
+    Idle Mean: float
+    Idle Std: float
+    Idle Max: float
+    Idle Min: float
+    Inbound: float
     
-    sepal_length: float
-    sepal_width: float
-    petal_length: float
-    petal_width: float
-
-
 def get_features(data: DataFeatures) -> np.ndarray:
     return np.array(
         [data.sepal_length, data.sepal_width, data.petal_length, data.petal_width],
