@@ -10,11 +10,12 @@ import pandas as pd
 import numpy as np
 import sklearn
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
 #from sklearn.svm import SVC
 
 #from tensorflow.keras.utils import to_categorical, plot_model
-#import tensorflow as tf
+
 #from tensorflow import keras
 #from keras.models import Sequential
 #from keras.layers import Dense,GRU,Embedding,Dropout,Flatten,Conv1D,MaxPooling1D,LSTM
