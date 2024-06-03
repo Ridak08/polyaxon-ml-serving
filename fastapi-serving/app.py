@@ -33,8 +33,8 @@ class DataFeatures(BaseModel):
     Bwd_Packet_Length_Min: float
     Bwd_Packet_Length_Mean: float
     Bwd_Packet_Length_Std: float
-    Flow_Bytes/s: float
-    Flow_Packets/s: float
+    Flow_Bytes_s: float
+    Flow_Packets_s: float
     Flow_IAT_Mean: float
     Flow_IAT_Std: float
     Flow_IAT_Max: float
@@ -52,8 +52,8 @@ class DataFeatures(BaseModel):
     Fwd_PSH_Flags: float
     Fwd_Header_Length: float
     Bwd_Header_Length: float
-    Fwd_Packets/s: float
-    Bwd_Packets/s: float
+    Fwd_Packets_s: float
+    Bwd_Packets_s: float
     Min_Packet_Length: float
     Max_Packet_Length: float
     Packet_Length_Mean: float
@@ -63,7 +63,7 @@ class DataFeatures(BaseModel):
     ACK_Flag_Count: float
     URG_Flag_Count: float
     CWE_Flag_Count: float
-    Down/Up_Ratio: float
+    Down_Up_Ratio: float
     Average_Packet_Size: float
     Avg_Fwd_Segment_Size: float
     Avg_Bwd_Segment_Size: float
@@ -83,7 +83,7 @@ class DataFeatures(BaseModel):
     
 def get_features(data: DataFeatures) -> np.ndarray:
     return np.array(
-        [data.sepal_length, data.sepal_width, data.petal_length, data.petal_width],
+        [data.Protocol, data.Flow_Duration, data.Total_Fwd_Packets, data.Total_Backward_Packets, data.Total_Length_of_Fwd_Packets, data.Total_Length_of_Bwd_Packets, data.Fwd_Packet_Length_Max,data.Fwd_Packet_Length_Min, data.Fwd_Packet_Length_Mean, data.Fwd_Packet_Length_Std,data.Bwd_Packet_Length_Max, data.Bwd_Packet_Length_Min, data.Bwd_Packet_Length_Mean,data.Bwd_Packet_Length_Std, data.Flow_Bytes_s, data.Flow_Packets_s,data.Flow_IAT_Mean, data.Flow_IAT_Std, data.Flow_IAT_Max,data.Flow_IAT_Min, data.Fwd_IAT_Total, data.Fwd_IAT_Mean,data.Fwd_IAT_Std, data.Fwd_IAT_Max, data.petal_length,data.Fwd_IAT_Min, data.Bwd_IAT_Total, data.Bwd_IAT_Mean,data.Bwd_IAT_Std, data.Bwd_IAT_Max, data.Bwd_IAT_Min,data.Fwd_PSH_Flags, data.Fwd_Header_Length, data.Bwd_Header_Length,data.Fwd_Packets_s, data.Bwd_Packets_s, data.Min_Packet_Length,data.Max_Packet_Length, data.Packet_Length_Mean, data.Packet_Length_Std,data.Packet_Length_Variance, data.SYN_Flag_Count, data.ACK_Flag_Count,data.URG_Flag_Count, data.CWE_Flag_Count, data.Down_Up_Ratio, data.Average_Packet_Size, data.Avg_Fwd_Segment_Size, data.Avg_Bwd_Segment_Size,data.Init_Win_Bytes_Forward, data.Init_Win_Bytes_Backward, data.Act_Data_Pkt_Fwd,data.Min_Seg_Size_Forward, data.Active_Mean, data.Active_Std,data.Active_Max, data.Active_Min, data.Idle_Mean,data.Idle_Std, data.Idle_Max, data.Idle_Min, data.Inbound],
         ndmin=2,
     )
 
