@@ -7,8 +7,8 @@ import sklearn
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
-import seaborn as sns
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+#import seaborn as sns
+#from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 def train_and_eval(
     #num_epochs = 50,
