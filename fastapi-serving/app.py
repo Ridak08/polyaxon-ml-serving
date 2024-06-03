@@ -20,65 +20,65 @@ classifier = load_model("./model.joblib")
 
 class DataFeatures(BaseModel):
     Protocol: int
-    Flow Duration: int
-    Total Fwd Packets: int
-    Total Backward Packets: int
-    Total Length of Fwd Packets: float
-    Total Length of Bwd Packets: float
-    Fwd Packet Length Max: float
-    Fwd Packet Length Min: float
-    Fwd Packet Length Mean: float
-    Fwd Packet Length Std: float
-    Bwd Packet Length Max: float
-    Bwd Packet Length Min: float
-    Bwd Packet Length Mean: float
-    Bwd Packet Length Std: float
-    Flow Bytes/s: float
-    Flow Packets/s: float
-    Flow IAT Mean: float
-    Flow IAT Std: float
-    Flow IAT Max: float
-    Flow IAT Min: float
-    Fwd IAT Total: float
-    Fwd IAT Mean: float
-    Fwd IAT Std: float
-    Fwd IAT Max: float
-    Fwd IAT Min: float
-    Bwd IAT Total: float
-    Bwd IAT Mean: float
-    Bwd IAT Std: float
-    Bwd IAT Max: float
-    Bwd IAT Min: float
-    Fwd PSH Flags: float
-    Fwd Header Length: float
-    Bwd Header Length: float
-    Fwd Packets/s: float
-    Bwd Packets/s: float
-    Min Packet Length: float
-    Max Packet Length: float
-    Packet Length Mean: float
-    Packet Length Std: float
-    Packet Length Variance: float
-    SYN Flag Count: float
-    ACK Flag Count: float
-    URG Flag Count: float
-    CWE Flag Count: float
-    Down/Up Ratio: float
-    Average Packet Size: float
-    Avg Fwd Segment Size: float
-    Avg Bwd Segment Size: float
-    Init_Win_bytes_forward: float
-    Init_Win_bytes_backward: float
-    act_data_pkt_fwd: float
-    min_seg_size_forward: float
-    Active Mean: float
-    Active Std: float
-    Active Max: float
-    Active Min: float
-    Idle Mean: float
-    Idle Std: float
-    Idle Max: float
-    Idle Min: float
+    Flow_Duration: int
+    Total_Fwd_Packets: int
+    Total_Backward_Packets: int
+    Total_Length_of_Fwd_Packets: float
+    Total_Length_of_Bwd_Packets: float
+    Fwd_Packet_Length_Max: float
+    Fwd_Packet_Length_Min: float
+    Fwd_Packet_Length_Mean: float
+    Fwd_Packet_Length_Std: float
+    Bwd_Packet_Length_Max: float
+    Bwd_Packet_Length_Min: float
+    Bwd_Packet_Length_Mean: float
+    Bwd_Packet_Length_Std: float
+    Flow_Bytes/s: float
+    Flow_Packets/s: float
+    Flow_IAT_Mean: float
+    Flow_IAT_Std: float
+    Flow_IAT_Max: float
+    Flow_IAT_Min: float
+    Fwd_IAT_Total: float
+    Fwd_IAT_Mean: float
+    Fwd_IAT_Std: float
+    Fwd_IAT_Max: float
+    Fwd_IAT_Min: float
+    Bwd_IAT_Total: float
+    Bwd_IAT_Mean: float
+    Bwd_IAT_Std: float
+    Bwd_IAT_Max: float
+    Bwd_IAT_Min: float
+    Fwd_PSH_Flags: float
+    Fwd_Header_Length: float
+    Bwd_Header_Length: float
+    Fwd_Packets/s: float
+    Bwd_Packets/s: float
+    Min_Packet_Length: float
+    Max_Packet_Length: float
+    Packet_Length_Mean: float
+    Packet_Length_Std: float
+    Packet_Length_Variance: float
+    SYN_Flag_Count: float
+    ACK_Flag_Count: float
+    URG_Flag_Count: float
+    CWE_Flag_Count: float
+    Down/Up_Ratio: float
+    Average_Packet_Size: float
+    Avg_Fwd_Segment_Size: float
+    Avg_Bwd_Segment_Size: float
+    Init_Win_Bytes_Forward: float
+    Init_Win_Bytes_Backward: float
+    Act_Data_Pkt_Fwd: float
+    Min_Seg_Size_Forward: float
+    Active_Mean: float
+    Active_Std: float
+    Active_Max: float
+    Active_Min: float
+    Idle_Mean: float
+    Idle_Std: float
+    Idle_Max: float
+    Idle_Min: float
     Inbound: float
     
 def get_features(data: DataFeatures) -> np.ndarray:
