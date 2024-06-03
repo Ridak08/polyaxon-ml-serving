@@ -6,20 +6,20 @@ from sklearn import metrics
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 
-import pandas as pd
-import numpy as np
-from sklearn.utils import resample
-from sklearn import preprocessing
-import matplotlib.pyplot as plt
-import sklearn
+#import pandas as pd
+#import numpy as np
+#from sklearn.utils import resample
+#from sklearn import preprocessing
+#import matplotlib.pyplot as plt
+#import sklearn
+#from sklearn.svm import SVC
 
 #from tensorflow.keras.utils import to_categorical, plot_model
 #import tensorflow as tf
 #from tensorflow import keras
 #from keras.models import Sequential
 #from keras.layers import Dense,GRU,Embedding,Dropout,Flatten,Conv1D,MaxPooling1D,LSTM
-from sklearn.svm import SVC
-import seaborn as sns
+
 
 
 def train_and_eval(
