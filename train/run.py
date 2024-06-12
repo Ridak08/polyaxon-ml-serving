@@ -7,11 +7,6 @@ from model import train_and_eval
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    #parser.add_argument(
-    #    "--num_epochs",
-    #    type=int,
-    #    default=50,
-    #)
     parser.add_argument(
         "--test_size",
         type=float,
@@ -32,7 +27,6 @@ if __name__ == "__main__":
     model_path = "model.joblib"
     metrics = train_and_eval(
         model_path=model_path,
-        #num_epochs=args.num_epochs,
         test_size=args.test_size,
         random_state=args.random_state,
     )
@@ -45,5 +39,5 @@ if __name__ == "__main__":
 
     # Logging the model
     tracking.log_model(
-        model_path, name="dnn1_model", framework="tensorflow", versioned=False
+        model_path, name="dnn1", framework="scikit-learn", versioned=False
     )
